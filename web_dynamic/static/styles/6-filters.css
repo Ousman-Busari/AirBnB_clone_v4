@@ -91,7 +91,7 @@ button:hover {
     padding-left: 10px;
 }
 
-.popover ul li input{
+.popover input{
     margin-right: 10px;
 }
 
@@ -99,6 +99,7 @@ button:hover {
     margin-top: 1.5%;
     margin-bottom: 5%;
     margin-left: 0px;
+    display: inline;
 }
 
 .amenities:hover .popover,

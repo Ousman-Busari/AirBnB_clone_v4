@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-	<script src="../static/scripts/2-hbnb.js/?{{ cache_id }} /"></script>
+	<script src="../static/scripts/3-hbnb.js/?{{ cache_id }} /"></script>
     <link rel="stylesheet" type="text/css" href="../static/styles/4-common.css/?{{ cache_id }} /">
     <link rel="stylesheet" type="text/css" href="../static/styles/3-header.css/?{{ cache_id }} /">
     <link rel="stylesheet" type="text/css" href="../static/styles/3-footer.css/?{{ cache_id }} /">
@@ -53,7 +53,7 @@
       <div class="placesh1"><h1>Places</h1></div>
       <section class="places">
 	<!-- <h1>Places</h1> -->
-	{% for place in places %}
+	<!-- {% for place in places %}
 	<article>
 	  <div class="title_box">
 	    <h2>{{ place.name }}</h2>
@@ -70,8 +70,27 @@
           <div class="description">
 	    {{ place.description | safe }}
           </div>
+		  <div class="reviews">
+            <h2>2 Reviews</h2>
+            <h3>From Jonny the June 18 2017</h3>
+            <ul>
+              <li>
+                <p>
+                  Had the dankest stay here, thanks bois!
+                </p>
+              </li>
+            </ul>
+            <h3>From Carson the April 22 2018</h3>
+            <ul>
+              <li>
+                <p>
+                  You bros know what I'm talking about. You know. Stay lit.
+                </p>
+              </li>
+            </ul>
+          </div>
 	</article>
-	{% endfor %}
+	{% endfor %} -->
       </section>
     </div>
     <footer>
