@@ -68,9 +68,10 @@ $(function () {
   });
 });
 
-function publishPlaces(data) {
+function publishPlaces(places) {
   $(".places").empty();
-  data.map((place) => {
+  places.forEach((place) => {
+    let placeID = place.id;
     $(".places").append(`<article>
         <div class="title_box">
         <h2>${place.name}</h2>
@@ -81,43 +82,47 @@ function publishPlaces(data) {
             <div class="number_rooms">${place.number_rooms} Bedrooms</div>
             <div class="number_bathrooms">${place.number_bathrooms} Bathrooms</div>
         </div>
+        <div id=${place.user_id} class="user"></div>
         <div class="description">${place.description}</div>
-        <div class="reviews"></div>
+        <div class="reviews" id="${placeID}"></div>
         </article`);
-  });
-
-  data.forEach((place) => {
+    $.get(
+      `http://localhost:5001/api/v1/users/${place.user_id}`,
+      function (owner) {
+        $("#" + place.user_id).html(
+          `<b>Owner</b>: ${owner.first_name} ${owner.last_name}`
+        );
+      }
+    );
     $.ajax({
       url: `http://localhost:5001/api/v1/places/${place.id}/reviews`,
       type: "GET",
-      success: publishPlaceReviews,
+      success: (reviews) => {
+        let count = "Reviews";
+        if (reviews.length == 1) count = "Review";
+        $("#" + placeID)
+          .html(`<h2>${reviews.length} ${count} <span>show...</span></h2>
+        <ul></ul>`);
+        reviews.forEach((review) => {
+          $.ajax({
+            url: `http://localhost:5001/api/v1/users/${review.user_id}`,
+            type: "GET",
+            success: (user) => {
+              $("#" + placeID + "> ul").append(
+                `<li><h3>From ${
+                  user.first_name + " " + user.last_name
+                } the ${new Date(review.created_at).toDateString()}</h3><p>${
+                  review.text
+                }</p></li>`
+              );
+            },
+          });
+        });
+        $(".reviews span").click(function () {
+          $(this).parent().next().css("display", "block");
+          // $(this).parent().next().toggleClass("show hide");
+        });
+      },
     });
   });
-  // let placeReviews = data.forEach();
-  
-  let reviewsIDS = data.map()
-}
-
-function publishPlaceReviews(reviews) {
-  $(".places .reviews")
-    .html(`<h2>${reviews.length} Reviews <span>show...</span></h2>
-  <ul></ul>`);
-  console.log($(".places .reviews > ul > li > p").text);
-  for (let i = 0; i < reviews.length; i++) {
-    $(".places .reviews > ul").html(
-      `<li><h3></h3><p></p>${reviews[i].text}</li>`
-      );
-    $.ajax({
-      url: `http://localhost:5001/api/v1/users/${reviews[i].user_id}`,
-      type: "GET",
-      success: getReviewer,
-    });
-  }
-}
-
-function getReviewer(user) {
-  console.log("working!")
-  $(".reviews > ul > li > h3").html(
-    `From ${user.first_name + user.last_name} the 9th of June`
-  );
 }
