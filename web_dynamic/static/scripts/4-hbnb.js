@@ -30,7 +30,7 @@ $(function () {
     $.ajax({
       url: "http://localhost:5001/api/v1/places_search/",
       type: "POST",
-      data: JSON.stringify({ amenities: Object.keys(amenities).join(", ") }),
+      data: JSON.stringify({ amenities: Object.keys(amenities)}),
       contentType: "application/json",
       dataType: "json",
       success: publishPlaces,

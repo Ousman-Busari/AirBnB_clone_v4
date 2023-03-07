@@ -26,6 +26,7 @@ $(function () {
     $(".amenities H4").text(Object.values(amenities).join(", "));
   });
 
+  
   const filters = {};
   const states = {};
   $(".locations > .popover > ul > li > input").change(function () {
@@ -53,10 +54,11 @@ $(function () {
 
   $(".filters button").click(function () {
     const data = JSON.stringify({
-      states: Object.keys(states).join(", "),
-      cities: Object.keys(cities).join(", "),
-      amenities: Object.keys(amenities).join(", "),
+      states: Object.keys(states),
+      cities: Object.keys(cities),
+      amenities: Object.keys(amenities),
     });
+
     $.ajax({
       url: "http://localhost:5001/api/v1/places_search/",
       type: "POST",
@@ -120,7 +122,6 @@ function publishPlaces(places) {
         });
         $(".reviews span").click(function () {
           $(this).parent().next().css("display", "block");
-          // $(this).parent().next().toggleClass("show hide");
         });
       },
     });
